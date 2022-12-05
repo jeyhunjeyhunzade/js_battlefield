@@ -32,7 +32,7 @@ function Person2(name, age, male) {
     function setAge(nwage) {
        age = nwage;
     }
-    return Object.freeze({get: get, setAge: setAge});
+    return Object.freeze({get, setAge});
 }
 
 const newPerson = Person2("Jane", 16,)
@@ -66,3 +66,44 @@ const personClass = new Person3('testFirstName', 'testLastName');
   
 console.log(personClass.firstName); // testFirstName
 console.log(personClass.lastName); // testLastName
+
+
+// Object.defineProperty
+const object1 = {};
+
+Object.defineProperty(object1, 'property1', {
+  value: 42,
+  writable: false
+});
+
+object1.property1 = 77;
+// throws an error in strict mode
+
+console.log(object1.property1);
+// expected output: 42
+
+
+
+
+// Object Literal Enhancement
+let name01 = "Duke";
+let color = "Brown";
+let age = 5;
+  
+// Using Object Literal Enhancement
+// Combines all variables into a dog object
+let dog = {name01, color, age};
+
+// Object.entries() - The Object.entries() method returns an array of a given object's own enumerable string-keyed property key-value pairs.
+const object1 = {
+  a: 'somestring',
+  b: 42
+};
+
+for (const [key, value] of Object.entries(object1)) {
+  console.log(`${key}: ${value}`);
+}
+
+// expected output:
+// "a: somestring"
+// "b: 42"

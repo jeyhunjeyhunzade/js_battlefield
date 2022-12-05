@@ -1,3 +1,5 @@
+// async and await are ES7 features!
+
 const wait1 = time => new Promise((resolve) => setTimeout(resolve, time));
 
 wait(3000).then(() => console.log('Hello!')); // 'Hello!'
@@ -94,7 +96,7 @@ function Prom(callback) {
 
 
 
-
+// Promise.all() - returned promise fulfills when all of the input's promises fulfill
 //  Here’s a simple code example where the Promise.all method consumes getFrogs and getLizards, 
 //  which are promises. It retrieves the results as an array inside the .then handler before storing them into the local storage
  const getFrogs = new Promise((resolve) => {
