@@ -55,7 +55,7 @@ var john = {
 john.greet("Mark");  // Hi Mark, my name is John
 
 var fx = john.greet;
-fx("Mark");   // Hi Mark, my name is
+fx("Mark");   // Hi Mark, my name is (because it gets invoked at the global scope)
 
 
 
@@ -71,7 +71,7 @@ var person = {
 
 greet.call(person, ...args); // Alex
 
-//      bind
+//      apply
 function greet() {
 	console.log(this.name);
 }
@@ -82,10 +82,30 @@ var person = {
 
 greet.apply(person, [args]); // Alex
 
-// new 
+// bind  (returns as a function that is borrowed with anouther object to serve for object we want)
+const person = {
+   firstName:"John",
+   lastName: "Doe",
+   fullName: function (args) {
+      console.log(args)
+     return this.firstName + " " + this.lastName + arg;
+   }
+ }
+ 
+ const member = {
+   firstName:"Hege",
+   lastName: "Nilsen",
+ }
+ 
+let fullName = person.fullName.bind(member, ", welcome!");
+console.log("fullName", fullName())
+
+
+
+// 4-new 
 function Foo() {        
     /*
-       1- create a new object using the object literal 
+        create a new object using the object literal 
        var this = {};
    */
 
@@ -95,7 +115,7 @@ function Foo() {
     return "I am " + this.name; 
    };
 
-  // 3- return this;
+  // return this;
 }
 
 var name = 'Ahmed';
