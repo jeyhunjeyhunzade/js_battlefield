@@ -59,7 +59,7 @@ for (let i=0; i < someArr.length; i++) {
 
 
 // Removing an Element by Value
-const myArray = [1, 2, 3, 4, 5];
+const myArray = ii;
 
 const index = myArray.indexOf(2);
 
@@ -67,3 +67,13 @@ const x = myArray.splice(index, 1);
 
 console.log(`myArray values: ${myArray}`);
 console.log(`variable x value: ${x}`);
+
+
+// array splice vs slice
+//    splice
+var array=[1,2,3,4,5];
+console.log(array.splice(2));//This will return [3,4,5]. The original array is affected resulting in array being [1,2].
+
+//    slice
+var array=[1,2,3,4,5]
+console.log(array.slice(2));//This will return [3,4,5]. The original array is NOT affected with resulting in array being [1,2,3,4,5].
