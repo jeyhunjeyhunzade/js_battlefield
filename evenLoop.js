@@ -51,7 +51,7 @@ function runWhileLoopForNSeconds(sec){
     console.log('D')
 }
 // A
-// D
+// D (because while loop is stack )
 // C
 // undefined (main is ended)
 // B
