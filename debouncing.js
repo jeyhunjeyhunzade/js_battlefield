@@ -1,3 +1,5 @@
+//Debouncing and throttling are techniques in javascript to optimise the application and browser performance.
+
 // debounce function
 function debounce(callback, limit) {
     let timeout;
