@@ -21,10 +21,8 @@ const App = () => {
 };
 
 const ChildComp = memo(({ callbackFucn }) => {
-  const [colorProp, setColor] = useState();
-
   console.log('updated');
-  return <div>{colorProp}</div>;
+  return <div>Child component</div>;
 });
 
 render(<App appName="User Details" />, document.getElementById('root'));
