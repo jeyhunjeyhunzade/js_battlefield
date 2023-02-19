@@ -59,7 +59,7 @@ for (let i=0; i < someArr.length; i++) {
 
 
 // Removing an Element by Value
-const myArray = ii;
+const myArray = [1, 2, 3, 4];
 
 const index = myArray.indexOf(2);
 
