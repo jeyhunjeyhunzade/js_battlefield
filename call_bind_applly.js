@@ -7,10 +7,10 @@ const person = {
     }
   }
   
-  const member = {
-    firstName:"Hege",
-    lastName: "Nilsen",
-  }
+const member = {
+  firstName:"Hege",
+  lastName: "Nilsen",
+}
   
 let fullName = person.fullName.bind(member);
 console.log("fullName", fullName())

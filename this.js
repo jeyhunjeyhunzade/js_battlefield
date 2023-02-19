@@ -89,7 +89,7 @@ var person = {
 
 greet.apply(person, [args]); // Alex
 
-// bind  (returns as a function that is borrowed with anouther object to serve for object we want)
+// bind  (returns as a function that is borrowed with another object to serve for object we want)
 const person = {
    firstName:"John",
    lastName: "Doe",
