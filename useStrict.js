@@ -36,5 +36,5 @@ function cool() {
     "use strict";
     // ... your code ...
     // this function is executed in strict mode
-  }
-  //anything outside of the function will be in non-strict mod
+}
+//anything outside of the function will be in non-strict mod
