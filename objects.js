@@ -45,7 +45,7 @@ const orgObject1 = { company: 'ABC Corp' };
 
 const employee1 = Object.create(orgObject1, { name: { value: 'EmployeeOne' } });
 
-//it keeps data of orgObject in its prototype
+//it keeps data of orgObject1 in its prototype
 console.log(employee1); // { company: "ABC Corp" }
 console.log(employee1.name); // "EmployeeOne"
 
@@ -77,7 +77,7 @@ Object.defineProperty(object1, 'property1', {
 });
 
 object1.property1 = 77;
-// throws an error in strict mode
+// it wont be able to change, and throws an error in strict mode 
 
 console.log(object1.property1);
 // expected output: 42
