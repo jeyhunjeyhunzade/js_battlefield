@@ -13,6 +13,13 @@
 //Application: The process of applying a function to its arguments in order to produce a return value.
 //Partial Application: The process of applying a function to some of its arguments:
 
-const partialApply = (targetFunction, ...fixedArgs) => functionWithFewerParams(...remainingArgs)
+//TODO: get it more clearyly!
+const partialApply = (fn, ...fixedArgs) => {
+    return function (...remainingArgs) {
+        return fn.apply(this, fixedArgs.concat(remainingArgs));
+    };
+};
+
 const add = (a, b) => a + b;
-const add10 = partialApply(add, 10);
+const add10 = partialApply(add, 10); //`10` becomes a fixed parameter remembered inside the `add10()` closure scope.
+add10(5); //15
