@@ -9,9 +9,9 @@ function debounce(callback, limit) {
         callback();
       }, limit);
     };
-  }
+}
   // main function
-  async function queryGoogle(e){
+async function queryGoogle(e){
     // use your own API key in production
     const api = `https://www.googleapis.com/customsearch/v1?key=AIzaSyDDafor7FhfUGTvGpjVdE7Tomnt1Yg6XGg&cx=017576662512468239146:omuauf_lfve&q=${searchInput.value}`;
     
@@ -22,7 +22,7 @@ function debounce(callback, limit) {
     
     // process the data
     console.log(data);
-  }
+}
   // pass our main function to the debounce function
   // the second parameter defines the delay in milliseconds
   const debouncedKeyPress = debounce(queryGoogle, 300);
