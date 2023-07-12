@@ -17,7 +17,7 @@ return `This ${this.model} was manufactured in the year ${this.dateManufactured}
 }
 let firstCar = new Car('red', 'Ferrari', '1985');
 console.log(firstCar);
-console.log(firstCar.carDate()); // à This Ferrari was manufactured in the year 1985.
+console.log(firstCar.carDate()); // This Ferrari was manufactured in the year 1985.
 
 
 
@@ -43,14 +43,14 @@ class CarClass {
     this.carname = brand;
     }
     present() {
-    return 'I have a ' + this.carname;
+        return 'I have a ' + this.carname;
     }
 }
 
 class Model extends Car {
     constructor(brand, mod) {
-    super(brand);
-    this.model = mod;
+        super(brand);
+        this.model = mod;
     }
 
     show() {

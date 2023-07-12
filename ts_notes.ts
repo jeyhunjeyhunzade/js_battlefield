@@ -89,7 +89,6 @@ type Person = Man | Woman;
 
 
 
-__
 //Tuples 
 type Reponse = [string, number]
 
@@ -163,15 +162,9 @@ const todo: TodoPreview = {
   createdAt: 1615544252770,
 };
  
-todo;
- 
-const todo: TodoPreview
- 
 type TodoInfo = Omit<Todo, "completed" | "createdAt">;
  
 const todoInfo: TodoInfo = {
   title: "Pick up kids",
   description: "Kindergarten closes at 5pm",
 };
- 
-todoInfo;
