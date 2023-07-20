@@ -29,3 +29,17 @@ alert(removed); // empty array
 removed = colors.splice(1, 1, "red", "purple"); //insert two values, remove one
 alert(colors); //green,red,purple,orange,blue
 alert(removed); //yellow - one item array
+
+// Predicate search
+const people = [
+  {
+    name: "Matt",
+    age: 27,
+  },
+  {
+    name: "Nicholas",
+    age: 29,
+  },
+];
+alert(people.find((element, index, array) => element.age < 28)); // {name: "Matt", age: 27}
+alert(people.findIndex((element, index, array) => element.age < 28)); // 0
