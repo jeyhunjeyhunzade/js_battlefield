@@ -13,7 +13,6 @@ files.forEach((fName) => {
 });
 
 finalHex.sort();
-console.log(finalHex);
 resStr = finalHex.join("");
 
 resStr += "mrjeyhun.work@gmail.com";
