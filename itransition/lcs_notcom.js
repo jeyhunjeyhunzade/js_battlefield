@@ -1,3 +1,4 @@
+// this version has some issues
 const words = process.argv.slice(2);
 if (!words || words.length === 0) {
   return "";
