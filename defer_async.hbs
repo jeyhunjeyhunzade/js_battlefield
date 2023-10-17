@@ -1,0 +1,28 @@
+{{!-- defer: --}}
+<!DOCTYPE html> <html>
+<head>
+<title>Example HTML Page</title>
+    {{!-- Setting the defer attribute on a <script> element signals to the browser that 
+        download should begin immediately but execution should be deferred --}}
+    <script defer src="example1.js"></script> 
+    <script defer src="example2.js"></script> 
+</head>
+<body>
+<!-- content here -->
+</body>
+</html> 
+
+{{!-- async:  --}}
+<!DOCTYPE html> <html>
+<head>
+<title>Example HTML Page</title>
+    {{!-- script is to indicate that the page need not wait for the script to be downloaded and executed before 
+    continuing to load, and it also need not wait for another script to load and 
+    execute before it can do the same. --}}
+    <script async src="example1.js"></script> 
+    <script async src="example2.js"></script> 
+</head>
+<body>
+<!-- content here -->
+</body>
+</html> 
