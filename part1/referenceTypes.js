@@ -41,5 +41,11 @@ const people = [
     age: 29,
   },
 ];
+
+/*
+The find() method of Array instances returns the first element in the provided array 
+that satisfies the provided testing function. The findIndex() returns the index 
+of the first element that satisfies the provided testing function
+*/
 alert(people.find((element, index, array) => element.age < 28)); // {name: "Matt", age: 27}
 alert(people.findIndex((element, index, array) => element.age < 28)); // 0
