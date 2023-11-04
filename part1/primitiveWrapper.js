@@ -26,7 +26,7 @@ console.log(stringValue.slice(3, -4)); // "lo w"
 console.log(stringValue.substring(3, -4)); // "hel"
 console.log(stringValue.substr(3, -4)); // "" (empty string)
 
-let color = "red"; // color is in global env
+var color = "red"; // color is in global env
 function sayColor() {
   console.log(window.color);
 }
