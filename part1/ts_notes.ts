@@ -158,3 +158,46 @@ const todoInfo: TodoInfo = {
   title: "Pick up kids",
   description: "Kindergarten closes at 5pm",
 };
+
+// Readonly
+interface Todo {
+  title: string;
+}
+
+const todo: Readonly<Todo> = {
+  title: "Delete inactive users",
+};
+
+todo.title = "Hello";
+
+// Record
+interface CatInfo {
+  age: number;
+  breed: string;
+}
+
+type CatName = "miffy" | "boris" | "mordred";
+
+const cats: Record<CatName, CatInfo> = {
+  miffy: { age: 10, breed: "Persian" },
+  boris: { age: 5, breed: "Maine Coon" },
+  mordred: { age: 16, breed: "British Shorthair" },
+};
+
+cats.boris; // const cats: Record<CatName, CatInfo>
+
+// Pick
+interface Todo {
+  title: string;
+  description: string;
+  completed: boolean;
+}
+
+type TodoPreview = Pick<Todo, "title" | "completed">;
+
+const todo: TodoPreview = {
+  title: "Clean room",
+  completed: false,
+};
+
+todo; // const todo: TodoPreview
