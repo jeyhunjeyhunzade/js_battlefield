@@ -42,13 +42,18 @@ for (var i = 0; i < 5; ++i) {
   setTimeout(() => console.log(i), 0);
 }
 // You might expect this to console.log 0, 1, 2, 3, 4
-// It will actually console.log 5, 5, 5, 5, 5, because when the timeouts later execute, they reference this same variable, and consequently console.log its final value.
+/* 
+  It will actually console.log 5, 5, 5, 5, 5, because when the timeouts later execute, 
+  they reference this same variable, and consequently console.log its final value.
+*/
 
 for (let i = 0; i < 5; ++i) {
   setTimeout(() => console.log(i), 0);
 }
-// console.logs 0, 1, 2, 3, 4, because behind the scenes the JavaScript engine will actually declare a new iterator variable each loop iteration
-
+/* 
+  console.logs 0, 1, 2, 3, 4, because behind the scenes the JavaScript engine will actually declare 
+  a new iterator variable each loop iteration
+*/
 let message;
 console.log(typeof message); // undefined
 console.log(typeof age); // is also undefined
@@ -96,7 +101,7 @@ let found3 = true;
 let result3 = found3 || someUndeclaredVariable; // no error
 console.log(result3); // works
 
-let found4 = true;
+let found4 = false;
 let result4 = found4 || someUndeclaredVariable; // error occurs here console.log(result);
 console.log(result4); // this line never executes
 
