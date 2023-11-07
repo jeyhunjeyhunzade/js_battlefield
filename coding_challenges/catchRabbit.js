@@ -1,9 +1,9 @@
-let pos = 45;
+let pos = 89;
 let len = 100;
 let found = false;
 
+console.log(`Rabbit started at ${pos}`);
 function step() {
-  console.log(`Rabbit started at ${pos}`);
   let prev = pos;
 
   if (pos === len) {
@@ -11,7 +11,7 @@ function step() {
   } else if (pos === 0) {
     pos++;
   } else {
-    if (Math.random > 0.5) {
+    if (Math.random() > 0.5) {
       pos++;
     } else {
       pos--;
@@ -21,22 +21,43 @@ function step() {
   console.log(`Rabbit jumped from ${prev} to ${pos}`);
 }
 
-for (let i = 0; i < len; i++) {
-  let attempt = i;
-
-  if (attempt === pos) {
-    found = true;
-    console.log(`Found the rabbit at ${pos}`);
-    break;
-  }
-  step();
-}
-
-if (!found) {
-  for (let i = 1; i < len; i++) {
+// if you have only one chance to checking the hole every time:
+if (false) {
+  for (let i = 0; i < len; i++) {
     let attempt = i;
 
     if (attempt === pos) {
+      found = true;
+      console.log(`Found the rabbit at ${pos}`);
+      break;
+    }
+    step();
+  }
+
+  if (!found) {
+    for (let i = 1; i < len; i++) {
+      let attempt = i;
+
+      if (attempt === pos) {
+        found = true;
+        console.log(`Found the rabbit at ${pos}`);
+        break;
+      }
+      step();
+    }
+  }
+}
+
+// if you have multiple chances to checking the holes every time:
+if (true) {
+  for (let i = 0; i < len; i++) {
+    let attempt = i;
+
+    if (attempt === pos) {
+      found = true;
+      console.log(`Found the rabbit at ${pos}`);
+      break;
+    } else if (attempt - 1 === pos || attempt + 1 === pos) {
       found = true;
       console.log(`Found the rabbit at ${pos}`);
       break;
