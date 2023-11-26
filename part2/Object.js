@@ -140,3 +140,88 @@
 
   let Person = function () {}; // Using a function expression is also suitable
 }
+
+{
+  function Person() {}
+
+  console.log(Person.prototype);
+  // {
+  //   constructor: f Person();
+  //   __proto__: Object
+  // }
+  console.log(Person.prototype.constructor === Person); // true
+
+  console.log(Person.prototype.__proto__ === Object.prototype); // true
+  console.log(Person.prototype.__proto__.constructor === Object); // true
+  console.log(Person.prototype.__proto__.__proto__ === null); // true,  The prototype of the Object prototype is null
+
+  console.log(Person.prototype.__proto__);
+  // {
+  //   constructor: f Object(),
+  //   toString: ...
+  //   hasOwnProperty: ...
+  //   isPrototypeOf: ...
+  // }
+
+  let person1 = new Person(),
+    person2 = new Person();
+
+  // * An instance has no direct link to the constructor, only through the prototype.
+  conosle.log(person1.__proto__.constructor === Person); // true
+
+  /**
+   * Two instances created from the same constructor function will share * a prototype object:
+   */
+  console.log(person1.__proto__ === person2.__proto__); // true
+  console.log(Person.prototype.isPrototypeOf(person1)); // true
+  console.log(Person.prototype.isPrototypeOf(person2)); // true
+
+  console.log(Object.getPrototypeOf(person1) == Person.prototype); // true
+  console.log(Object.getPrototypeOf(person1).name); // "Nicholas"
+
+  let biped = { numLegs: 2 };
+  let person = {
+    name: "Matt",
+  };
+
+  Object.setPrototypeOf(person, biped);
+
+  console.log(person.name); // Matt
+  console.log(person.numLegs); // 2
+  console.log(Object.getPrototypeOf(person) === biped); // true
+
+  /**
+   * Object.create() is recommended way to do it, because
+   * the Object.setPrototypeOf() operation will likely cause severe performance slowdowns when used
+   */
+}
+
+{
+  function Person() {}
+  Person.prototype.name = "Nicholas";
+  Person.prototype.age = 29;
+  Person.prototype.job = "Software Engineer";
+  Person.prototype.sayName = function () {
+    console.log(this.name);
+  };
+  let person1 = new Person();
+  let person2 = new Person();
+
+  console.log(person1.hasOwnProperty("name")); // false
+  console.log("name" in person1); // true
+
+  person1.name = "Greg";
+  console.log(person1.name); // "Greg" - from instance
+  console.log(person1.hasOwnProperty("name")); // true
+  console.log("name" in person1); // true
+
+  function hasPrototypeProperty(object, name) {
+    return !object.hasOwnProperty(name) && name in object;
+  }
+
+  let person = new Person();
+  console.log(hasPrototypeProperty(person, "name")); // true
+
+  person.name = "Greg";
+  console.log(hasPrototypeProperty(person, "name")); // false
+}
