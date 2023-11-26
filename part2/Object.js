@@ -75,6 +75,8 @@
   // { name: 'Matt', age: 27, job: { title: 'Hacker' } }
 }
 
+//----------------------------------------------------------------
+
 // * Object creation patterns:
 {
   // The Factory Pattern:
@@ -92,6 +94,8 @@
   let person1 = createPerson("Nicholas", 29, "Software Engineer");
   let person2 = createPerson("Greg", 27, "Doctor");
 }
+
+//----------------------------------------------------------------
 
 {
   // The Function Constructor Pattern
@@ -118,6 +122,8 @@
   // BUT:
   console.log(person1.sayName == person2.sayName); // false
 }
+
+//----------------------------------------------------------------
 
 {
   // The Prototype Pattern:
@@ -225,3 +231,5 @@
   person.name = "Greg";
   console.log(hasPrototypeProperty(person, "name")); // false
 }
+
+//----------------------------------------------------------------
