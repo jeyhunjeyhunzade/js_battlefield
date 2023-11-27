@@ -233,3 +233,135 @@
 }
 
 //----------------------------------------------------------------
+// Prototype Chaining
+{
+  function SuperType() {
+    this.property = true;
+  }
+  SuperType.prototype.getSuperValue = function () {
+    return this.property;
+  };
+  function SubType() {
+    this.subproperty = false;
+  }
+
+  // inherit from SuperType
+  SubType.prototype = new SuperType();
+  SubType.prototype.getSubValue = function () {
+    return this.subproperty;
+  };
+
+  let instance = new SubType();
+  console.log(instance.getSuperValue()); // true
+
+  console.log(instance instanceof Object); // true
+  console.log(instance instanceof SuperType); // true
+  console.log(instance instanceof SubType); // true
+
+  console.log(Object.prototype.isPrototypeOf(instance)); // true
+  console.log(SuperType.prototype.isPrototypeOf(instance)); // true
+  console.log(SubType.prototype.isPrototypeOf(instance)); // true
+}
+
+// Problems with Prototype Chaining
+{
+  function SuperType() {
+    this.colors = ["red", "blue", "green"];
+  }
+
+  function SubType() {}
+
+  // inherit from SuperType
+  SubType.prototype = new SuperType();
+
+  let instance1 = new SubType();
+  instance1.colors.push("black");
+  console.log(instance1.colors); // "red,blue,green,black"
+
+  let instance2 = new SubType();
+  console.log(instance2.colors); // "red,blue,green,black" !!!
+}
+
+// Fixing it
+{
+  // Constructor stealing
+  function SuperType() {
+    this.colors = ["red", "blue", "green"];
+  }
+
+  function SubType() {
+    // inherit from SuperType
+    SuperType.call(this);
+  }
+
+  let instance1 = new SubType();
+  instance1.colors.push("black");
+  console.log(instance1.colors); // red,blue,green,black
+  let instance2 = new SubType();
+  console.log(instance2.colors); // red,blue,green
+}
+
+// Constructor stealing cannot inherit methods
+// For inheriting methods too, Combination Inheritance is right way
+{
+  function SuperType(name) {
+    this.name = name;
+    this.colors = ["red", "blue", "green"];
+  }
+
+  SuperType.prototype.sayName = function () {
+    console.log(this.name);
+  };
+
+  function SubType(name, age) {
+    // inherit properties
+    SuperType.call(this, name);
+    this.age = age;
+  }
+
+  // INHERIT METHODS
+  SubType.prototype = new SuperType();
+
+  // SubType own method
+  SubType.prototype.sayAge = function () {
+    console.log(this.age);
+  };
+
+  let instance1 = new SubType("Nicholas", 29);
+  instance1.colors.push("black");
+
+  console.log(instance1.colors); // "red,blue,green,black"
+  instance1.sayName(); // "Nicholas";
+  instance1.sayAge(); // 29
+
+  let instance2 = new SubType("Greg", 27);
+  console.log(instance2.colors); // "red,blue,green"
+  instance2.sayName(); // "Greg";
+  instance2.sayAge(); // 27
+}
+
+//----------------------------------------------------------------
+
+{
+  let person = {
+    name: "Nicholas",
+    friends: ["Shelby", "Court", "Van"],
+  };
+
+  let anotherPerson = Object.create(person);
+  anotherPerson.name = "Greg";
+  // or
+  let anotherPerson2 = Object.create(person, {
+    name: {
+      value: "Greg",
+    },
+  });
+
+  anotherPerson.friends.push("Rob");
+
+  let yetAnotherPerson = Object.create(person);
+  yetAnotherPerson.name = "Linda";
+  yetAnotherPerson.friends.push("Barbie");
+
+  console.log(person.friends); // "Shelby,Court,Van,Rob,Barbie"
+}
