@@ -365,3 +365,142 @@
 
   console.log(person.friends); // "Shelby,Court,Van,Rob,Barbie"
 }
+
+//----------------------------------------------------------------
+
+// Class
+{
+  class Person {
+    constructor() {
+      // Everything added to 'this' will exist on each individual instance
+      this.locate = () => console.log("instance");
+    }
+
+    // Everything defined in the class body is defined on the class prototype object
+    locate() {
+      console.log("prototype");
+    }
+  }
+
+  let p = new Person();
+  p.locate(); // instance
+  Person.prototype.locate(); // prototype
+}
+
+{
+  class Person {
+    constructor() {
+      // Everything added to 'this' will exist on each individual instance
+      this.locate = () => console.log("instance", this);
+    }
+
+    // Defined on the class prototype object
+    locate() {
+      console.log("prototype", this);
+    }
+
+    // Defined on the class
+    static locate() {
+      console.log("class", this);
+    }
+  }
+
+  let p = new Person();
+  p.locate(); // instance, Person {}
+
+  Person.prototype.locate(); // prototype, {constructor: ... }
+
+  Person.locate(); // class, class Person {}
+}
+
+{
+  // super
+  class Vehicle {
+    constructor() {
+      this.hasEngine = true;
+    }
+  }
+
+  class Bus extends Vehicle {
+    constructor() {
+      // Cannot reference 'this' before super(), will throw ReferenceError
+      super(); // same as super.constructor()
+      console.log(this instanceof Vehicle); // true
+      console.log(this); // Bus { hasEngine: true }
+    }
+  }
+}
+
+{
+  // super in static methods
+  class Vehicle {
+    static identify() {
+      console.log("vehicle");
+    }
+  }
+
+  class Bus extends Vehicle {
+    static identify() {
+      super.identify();
+    }
+  }
+
+  Bus.identify(); // vehicle
+}
+
+{
+  // super behaves like a constructor function
+  class Vehicle {
+    constructor(licensePlate) {
+      this.licensePlate = licensePlate;
+    }
+  }
+  class Bus extends Vehicle {
+    constructor(licensePlate) {
+      super(licensePlate);
+    }
+  }
+
+  console.log(new Bus("1337H4X")); // Bus { licensePlate: '1337H4X' }
+}
+
+{
+  /*
+  If you decline to define a constructor function, super() will be invoked and all arguments
+  passed to the derived class constructor.
+  */
+  class Vehicle {
+    constructor(licensePlate) {
+      this.licensePlate = licensePlate;
+    }
+  }
+
+  class Bus extends Vehicle {}
+  console.log(new Bus("1337H4X")); // Bus { licensePlate: '1337H4X' }
+}
+
+// Abstract Base Classes
+{
+  class Vehicle {
+    constructor() {
+      if (new.target === Vehicle) {
+        throw new Error("Vehicle cannot be directly instantiated");
+      }
+      if (!this.foo) {
+        throw new Error("Inheriting class must define foo()");
+      }
+      console.log("success!");
+    }
+  }
+
+  // Derived class
+  class Bus extends Vehicle {
+    foo() {}
+  }
+
+  // Derived class
+  class Van extends Vehicle {}
+
+  new Bus(); // success!
+  new Van(); // Error: Inheriting class must define foo()
+}
