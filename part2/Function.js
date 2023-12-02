@@ -240,3 +240,59 @@
     return fibImpl(b, a + b, n - 1);
   }
 }
+
+{
+  // this and clousure
+  window.identity = "The Window";
+  let object = {
+    identity: "My Object",
+    getIdentityFunc() {
+      return function () {
+        return this.identity;
+      };
+    },
+  };
+
+  console.log(object.getIdentityFunc()()); // 'The Window'
+}
+
+{
+  function MyObject() {
+    // private variables and functions
+    let privateVariable = 10;
+    function privateFunction() {
+      return false;
+    }
+    // privileged methods
+    this.publicMethod = function () {
+      privateVariable++;
+      return privateFunction();
+    };
+  }
+}
+
+{
+  // static private variables
+  (function () {
+    let name = "";
+    Person = function (value) {
+      name = value;
+    };
+    Person.prototype.getName = function () {
+      return name;
+    };
+    Person.prototype.setName = function (value) {
+      name = value;
+    };
+  })();
+
+  let person1 = new Person("Nicholas");
+  console.log(person1.getName()); // 'Nicholas'
+  person1.setName("Matt");
+  console.log(person1.getName()); // 'Matt'
+
+  let person2 = new Person("Michael");
+  console.log(person1.getName()); // 'Michael'
+  console.log(person2.getName()); // 'Michael'
+  // the name variable becomes static and will be used among all instances.
+}
