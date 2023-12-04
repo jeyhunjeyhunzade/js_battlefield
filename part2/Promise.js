@@ -259,3 +259,208 @@
     }
   }
 }
+
+//----------------------------------------------------------------
+
+// Cancelling a promise
+{
+  <>
+    <button id="start">Start</button>
+    <button id="cancel">Cancel</button>
+  </>;
+
+  class CancelToken {
+    constructor(cancelFn) {
+      this.promise = new Promise((resolve, reject) => {
+        cancelFn(() => {
+          setTimeout(console.log, 0, "delay cancelled");
+          resolve();
+        });
+      });
+    }
+  }
+
+  const startButton = document.querySelector("#start");
+  const cancelButton = document.querySelector("#cancel");
+
+  function cancellableDelayedResolve(delay) {
+    setTimeout(console.log, 0, "set delay");
+    return new Promise((resolve, reject) => {
+      const id = setTimeout(() => {
+        setTimeout(console.log, 0, "delayed resolve");
+        resolve();
+      }, delay);
+      const cancelToken = new CancelToken((cancelCallback) =>
+        cancelButton.addEventListener("click", cancelCallback)
+      );
+      cancelToken.promise.then(() => clearTimeout(id));
+    });
+  }
+
+  startButton.addEventListener("click", () => cancellableDelayedResolve(1000));
+}
+
+// Promise Progress Notifications
+{
+  class TrackablePromise extends Promise {
+    constructor(executor) {
+      const notifyHandlers = [];
+      super((resolve, reject) => {
+        return executor(resolve, reject, (status) => {
+          notifyHandlers.map((handler) => handler(status));
+        });
+      });
+      this.notifyHandlers = notifyHandlers;
+    }
+    notify(notifyHandler) {
+      this.notifyHandlers.push(notifyHandler);
+      return this;
+    }
+  }
+
+  let p = new TrackablePromise((resolve, reject, notify) => {
+    function countdown(x) {
+      if (x > 0) {
+        notify(`${20 * x}% remaining`);
+        setTimeout(() => countdown(x - 1), 1000);
+      } else {
+        resolve();
+      }
+    }
+    countdown(5);
+  });
+
+  p.notify((x) => setTimeout(console.log, 0, "progress:", x));
+  p.then(() => setTimeout(console.log, 0, "completed"));
+
+  // (after 1s) 80% remaining
+  // (after 2s) 60% remaining
+  // (after 3s) 40% remaining
+  // (after 4s) 20% remaining
+  // (after 5s) completed
+}
+
+{
+  // An async function will always return a promise object
+
+  async function foo() {
+    console.log(1);
+    return 3;
+  }
+  foo().then(console.log);
+
+  console.log(2);
+
+  // 1 // 2 // 3
+}
+
+{
+  async function foo() {
+    let p = new Promise((resolve, reject) => setTimeout(resolve, 1000, 3));
+    console.log(await p);
+  }
+  foo(); // 3
+}
+
+{
+  // Asynchronously print "baz" after 1000ms
+  async function baz() {
+    await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+    console.log("baz");
+  }
+  baz();
+  // baz <after 1000ms>
+}
+
+{
+  // Implementing Sleep()
+
+  async function sleep(delay) {
+    return new Promise((resolve) => setTimeout(resolve, delay));
+  }
+
+  async function foo() {
+    const t0 = Date.now();
+    await sleep(1500); // sleep for ~1500ms
+    console.log(Date.now() - t0);
+  }
+  foo(); // 1502
+}
+
+// Maximizing Parallelization
+{
+  async function randomDelay(id) {
+    // Delay between 0 and 1000 ms
+    const delay = Math.random() * 1000;
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        console.log(`${id} finished`);
+        resolve();
+      }, delay)
+    );
+  }
+
+  // not paralel
+  async function foo() {
+    const t0 = Date.now();
+    await randomDelay(0);
+    await randomDelay(1);
+    await randomDelay(2);
+    await randomDelay(3);
+    await randomDelay(4);
+    console.log(`${Date.now() - t0}ms elapsed`);
+  }
+  foo();
+  // 0 finished
+  // 1 finished
+  // 2 finished
+  // 3 finished
+  // 4 finished
+  // 2219ms elapsed
+
+  // paralel
+  async function fooParalel() {
+    const t0 = Date.now();
+    const p0 = randomDelay(0);
+    const p1 = randomDelay(1);
+    const p2 = randomDelay(2);
+    const p3 = randomDelay(3);
+    const p4 = randomDelay(4);
+
+    await p0;
+    await p1;
+    await p2;
+    await p3;
+    await p4;
+
+    setTimeout(console.log, 0, `${Date.now() - t0}ms elapsed`);
+  }
+
+  fooParalel();
+  // 1 finished
+  // 4 finished
+  // 3 finished
+  // 0 finished
+  // 2 finished
+  // 2219ms elapsed
+
+  async function fooParalelMoreOptimized() {
+    const t0 = Date.now();
+    const promises = Array(5)
+      .fill(null)
+      .map((_, i) => randomDelay(i));
+    for (const p of promises) {
+      await p;
+    }
+
+    console.log(`${Date.now() - t0}ms elapsed`);
+  }
+
+  fooParalelMoreOptimized();
+  // 4 finished
+  // 2 finished
+  // 1 finished
+  // 0 finished
+  // 3 finished
+  // 877ms elapsed
+}
