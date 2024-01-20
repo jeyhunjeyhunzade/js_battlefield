@@ -2,10 +2,7 @@
 
 
  
-A playground for training JS, Algoritms & Data Structures skills 💛 <br />
-Notion: https://www.notion.so/MasterClass-66691ec887324ef9ae217ff1248b0472?pvs=4
+A playground for training JS/TS, Algoritms & Data Structures skills 💛 <br />
 
-Relocation (Germany)
-https://raindrop.io/Sascha-Markovic/employers-25348269
 
 
