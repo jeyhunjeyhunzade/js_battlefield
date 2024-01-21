@@ -18,7 +18,7 @@
 //       '####'
 
 function steps(n, row = 0, stair = "") {
-  // solution 1 (iterative):
+  // solution 1: iterative
   if (false) {
     for (let row = 0; row < n; row++) {
       let stair = "";
@@ -30,27 +30,33 @@ function steps(n, row = 0, stair = "") {
           stair += " ";
         }
       }
+
       console.log(stair);
     }
   }
 
-  // solution 2 (recursion):
+  // solution: recursive
   if (true) {
+    // 1. Base Case
     if (row === n) {
       return;
     }
 
-    if (n === stair.length) {
+    // 2. Recursive
+    // print the stair and pass to the next row
+    if (stair.length === n) {
       console.log(stair);
       return steps(n, row + 1);
     }
 
+    // stair or empty string
     if (stair.length <= row) {
       stair += "#";
     } else {
       stair += " ";
     }
 
+    // recurse
     steps(n, row, stair);
   }
 }

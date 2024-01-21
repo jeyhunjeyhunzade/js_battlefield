@@ -15,7 +15,7 @@
 //       '#####'
 
 function pyramid(n, row = 0, level = "") {
-  // solution 1 (iteration):
+  // solution: iterative
   if (false) {
     const midpoint = Math.floor((2 * n - 1) / 2);
 
@@ -33,12 +33,15 @@ function pyramid(n, row = 0, level = "") {
     }
   }
 
-  // solution 2 (recursion):
+  // solution: recursive
   if (true) {
+    // Base Case
     if (row === n) {
       return;
     }
 
+    // Recursive Case
+    // print level and pass to the next row
     if (level.length === 2 * n - 1) {
       console.log(level);
       return pyramid(n, row + 1);
@@ -51,7 +54,10 @@ function pyramid(n, row = 0, level = "") {
     } else {
       add = " ";
     }
+
     level += add;
+
+    // recurse
     pyramid(n, row, level);
   }
 }
