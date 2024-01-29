@@ -75,4 +75,42 @@
 
   const v1 = typeof p; // Value is "object"
   const v2 = typeof email; // Value is "function"
+
+  const username: Person["username"] = p["username"]; // Or p.first
+  // ------ ------- Types         // ----- ---------- Values
+
+  // type declaration vs type assertion
+  const alice: Person = {
+    username: "Alice",
+    occupation: "TypeScript developer",
+    // ~~~~~~~~~ Object literal may only specify known properties // and 'occupation' does not exist in type 'Person'
+  };
+
+  const bob = {} as Person; // No error
+}
+
+{
+  /* 
+    You can tell TypeScript to expect additional properties using an index signature:
+  */
+  interface Options {
+    darkMode?: boolean;
+    [otherOptions: string]: unknown;
+  }
+  const o: Options = { darkmode: true }; // OK
+}
+
+{
+  declare function fetch(
+    input: RequestInfo,
+    init?: RequestInit
+  ): Promise<Response>;
+
+  const checkedFetch: typeof fetch = async (input, init) => {
+    const response = await fetch(input, init);
+    if (!response.ok) {
+      throw new Error("Request failed: " + response.status);
+    }
+    return response;
+  };
 }
