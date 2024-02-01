@@ -122,5 +122,4 @@ with (location) {
   let qs = search.substring(1);
   let hostName = hostname;
   let url = href;
-}
-//In strict mode, the with statement is not allowed and is considered a syntax error.
+} //In strict mode, the with statement is not allowed and is considered a syntax error.
